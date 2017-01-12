@@ -7,14 +7,14 @@
     android:layout_margin="15dp"
     android:background="#8000">
 
-    <TextView
+   <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="预报"
         android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textSize="20sp"/>-->
 
     <LinearLayout
         android:id="@+id/forecast_layout"
@@ -22,5 +22,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>
-
+    <TextView
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <TextView
+        android:textColor="#fff"
+        android:id="@+id/tv_forecast_more"
+        android:gravity="center"
+        android:text="查看详情"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

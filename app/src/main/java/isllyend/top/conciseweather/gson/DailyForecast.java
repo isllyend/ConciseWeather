@@ -14,12 +14,35 @@ public class DailyForecast {
 
     @SerializedName("cond")
     public More more;
-    public class Temperature{
+
+    @SerializedName("wind")
+    public Wind wind;
+    @SerializedName("astro")
+    public Astro astro;
+
+    public class Temperature {
         public String max;
         public String min;
     }
-    public class More{
+
+    public class More {
         @SerializedName("txt_d")
         public String info;
+        @SerializedName("txt_n")
+        public String info2;
+        @SerializedName("code_d")
+        public String code_d;
+    }
+
+    public class Wind {
+        @SerializedName("dir")
+        public String dir;
+        @SerializedName("sc")
+        public String sc;
+    }
+
+    public class Astro {
+        public String sr;
+        public String ss;
     }
 }
