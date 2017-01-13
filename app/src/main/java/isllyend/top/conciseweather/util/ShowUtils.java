@@ -3,10 +3,8 @@ package isllyend.top.conciseweather.util;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
@@ -25,11 +23,7 @@ public class ShowUtils {
     public static PopupWindow createPw(int layoutId, Context context, Weather weather){
         View view= LayoutInflater.from(context).inflate(layoutId,null);
         //获取屏幕高度
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        int height=outMetrics.heightPixels;
+        int height=ScreenUtils.getDispaly(context).heightPixels;
         PopupWindow popupWindow=new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, height/10*8,false);
         popupWindow.setFocusable(true);
         PopupWindowAdapter popupWindowAdapter=new PopupWindowAdapter(weather,context);
@@ -42,13 +36,7 @@ public class ShowUtils {
 
     public static PopupWindow createPw2(int layoutId, Context context, Weather weather){
 
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        int height=outMetrics.heightPixels;
-
-
+        int height=ScreenUtils.getDispaly(context).heightPixels;
         View view= LayoutInflater.from(context).inflate(layoutId,null);
         PopupWindow popupWindow=new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, height/10*8,false);
         popupWindow.setFocusable(true);

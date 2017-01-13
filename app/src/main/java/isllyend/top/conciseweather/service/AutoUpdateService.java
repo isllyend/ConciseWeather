@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import isllyend.top.conciseweather.gson.Weather;
 import isllyend.top.conciseweather.util.HttpUtil;
+import isllyend.top.conciseweather.util.ScreenUtils;
 import isllyend.top.conciseweather.util.Utility;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,6 +51,9 @@ public class AutoUpdateService  extends Service{
      * 更新必应图片
      */
     private void updateBingPic() {
+        int widthSc= ScreenUtils.getDispaly(this).widthPixels;
+        int heightSc=ScreenUtils.getDispaly(this).heightPixels;
+//        String requestBingPic = "http://lorempixel.com/"+widthSc+"/"+heightSc+"/city/";
         String requestBingPic = "http://guolin.tech/api/bing_pic";
         HttpUtil.sendOkhttpRequest(requestBingPic, new Callback() {
             @Override

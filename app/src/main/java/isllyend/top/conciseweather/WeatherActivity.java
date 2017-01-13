@@ -32,6 +32,7 @@ import isllyend.top.conciseweather.gson.HourlyForecast;
 import isllyend.top.conciseweather.gson.Weather;
 import isllyend.top.conciseweather.service.AutoUpdateService;
 import isllyend.top.conciseweather.util.HttpUtil;
+import isllyend.top.conciseweather.util.ScreenUtils;
 import isllyend.top.conciseweather.util.ShowUtils;
 import isllyend.top.conciseweather.util.Utility;
 import okhttp3.Call;
@@ -312,10 +313,13 @@ public class WeatherActivity extends AppCompatActivity {
 
 
     /**
-     * 加载必应每日一图
+     * 加载必应背景图
      */
     private void loadBingPic() {
+        int widthSc= ScreenUtils.getDispaly(getApplicationContext()).widthPixels;
+        int heightSc=ScreenUtils.getDispaly(getApplicationContext()).heightPixels;
         String requestBingPic = "http://guolin.tech/api/bing_pic";
+//        String requestBingPic = "http://lorempixel.com/"+widthSc+"/"+heightSc+"/city/";
         HttpUtil.sendOkhttpRequest(requestBingPic, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -336,5 +340,12 @@ public class WeatherActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+    /*    Bitmap bitmap=HttpUtil.getHttpBitmap(requestBingPic);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes=baos.toByteArray();
+        Glide.with(WeatherActivity.this)
+                .load(bytes)
+                .into(bingPicImg);*/
     }
 }
