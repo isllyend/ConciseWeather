@@ -2,13 +2,9 @@ package isllyend.top.conciseweather;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.john.waveview.WaveView;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.IOException;
@@ -39,7 +34,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends BaseActivity {
     private ScrollView weatherLayout;
     private TextView titleCity;
     private TextView titleUpdateTime;
@@ -60,18 +55,10 @@ public class WeatherActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public Button navButton;
     public PullToRefreshView swipeRefreshLayout;
-    private WaveView waveView;
 
+    String cityName,weatherString,bingPic,weatherName;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //背景图和状态栏融合
-        if (Build.VERSION.SDK_INT>=21){
-            View v=getWindow().getDecorView();
-            v.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        setContentView(R.layout.activity_weather);
+    protected void findView() {
         //初始化控件
         weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
         titleCity = (TextView) findViewById(R.id.title_city);
@@ -97,32 +84,16 @@ public class WeatherActivity extends AppCompatActivity {
         drawerLayout= (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);//禁止滑动弹出
         navButton= (Button) findViewById(R.id.nav_button);
-        waveView= (WaveView) findViewById(R.id.wave_view);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String weatherString = prefs.getString("weather", null);
-        String bingPic = prefs.getString("bing_pic", null);
-        final String weatherId;
-        if (bingPic != null) {
-            Glide.with(this).load(bingPic).into(bingPicImg);
-        } else {
-            loadBingPic();
-        }
-        if (weatherString != null) {
-            //有缓存时直接解析天气数据
-            Weather weather = Utility.handleWeatherResponse(weatherString);
-            weatherId=weather.basic.weatherId;
-            showWeatherInfo(weather);
-        } else {
-            weatherId = getIntent().getStringExtra("weather_id");
-            weatherLayout.setVisibility(View.INVISIBLE);
-            requestWeather(weatherId);
-        }
 
+    }
+
+    @Override
+    protected void initEvent() {
         swipeRefreshLayout.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestWeather(weatherId);
+                requestWeather(null,cityName);
             }
         });
         navButton.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +106,7 @@ public class WeatherActivity extends AppCompatActivity {
         tv_forecast_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String weatherString = prefs.getString("weather", null);
                 Weather weather = Utility.handleWeatherResponse(weatherString);
                 PopupWindow popupWindow= ShowUtils.createPw(R.layout.forecast_more,WeatherActivity.this,weather);
@@ -171,6 +142,44 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void initView() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        weatherString = prefs.getString("weather", null);
+        bingPic = prefs.getString("bing_pic", null);
+        cityName=getIntent().getStringExtra("cityName");
+        getIntent().getStringExtra("weather_name");
+    }
+
+    @Override
+    protected void loadData() {
+
+        if (bingPic != null) {
+            Glide.with(this).load(bingPic).into(bingPicImg);
+        } else {
+            loadBingPic();
+        }
+
+        if (cityName==weatherName ){
+            if (weatherString != null) {
+                //有缓存时直接解析天气数据
+                Weather weather = Utility.handleWeatherResponse(weatherString);
+                showWeatherInfo(weather);
+            }
+        }else {
+            {
+                weatherLayout.setVisibility(View.INVISIBLE);
+                requestWeather(null,cityName);
+            }
+        }
+    }
+
+    @Override
+    protected int setViewId() {
+        return R.layout.activity_weather;
+    }
+
     /**
      * 设置添加屏幕的背景透明度
      * @param bgAlpha
@@ -269,11 +278,17 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     /**
-     * 根据天气id请求城市天气信息。
+     * 根据天气id,城市请求城市天气信息。
      */
-    public void requestWeather(final String weatherId) {
+    public void requestWeather(final String weatherId,final String cityName) {
         final Weather weatherRe;
-        String weatherUrl = "http://apis.baidu.com/heweather/pro/weather?cityid="+weatherId;
+        String weatherUrl=null;
+        if (cityName==null){
+           weatherUrl = "http://apis.baidu.com/heweather/pro/weather?cityid="+weatherId;
+        }else {
+            weatherUrl="http://apis.baidu.com/heweather/pro/weather?city="+cityName;
+        }
+
         HttpUtil.sendOkhttpRequest2(weatherUrl, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
