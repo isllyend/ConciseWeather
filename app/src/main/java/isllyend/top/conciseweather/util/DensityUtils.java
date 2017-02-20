@@ -5,7 +5,7 @@ import android.util.TypedValue;
 
 /**
  * px与dp互相转换
- * Created by yangle on 2016/11/25.
+ *
  */
 public class DensityUtils {
 

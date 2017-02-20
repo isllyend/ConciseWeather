@@ -21,7 +21,9 @@ public class DailyForecast {
     public Astro astro;
 
     public class Temperature {
+        @SerializedName("max")
         public String max;
+        @SerializedName("min")
         public String min;
     }
 

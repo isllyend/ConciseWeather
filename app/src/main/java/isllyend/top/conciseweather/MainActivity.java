@@ -31,7 +31,6 @@ public class MainActivity extends BaseActivity {
         locationClient=new LocationClient(getApplicationContext());
         locationClient.registerLocationListener(new MyLocationListener());
         pre= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         List<String> perList=new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
@@ -75,6 +74,7 @@ public class MainActivity extends BaseActivity {
         showProgressDialog();
         initLocation();
         locationClient.start();
+
     }
 
     private void initLocation() {
@@ -129,7 +129,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        locationClient.stop();
     }
     private void showProgressDialog() {
         if (progressDialog==null){

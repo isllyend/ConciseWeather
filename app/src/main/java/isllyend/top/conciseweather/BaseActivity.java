@@ -1,10 +1,8 @@
 package isllyend.top.conciseweather;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by Chigo on 2017/2/7.
@@ -15,14 +13,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //android 5.0 状态栏可控制
-        if (Build.VERSION.SDK_INT>20){
-
+        /*if (Build.VERSION.SDK_INT>20){
             View decorView=getWindow().getDecorView();
             //活动的布局会显示在状态栏上
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN| View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             //设置状态栏透明
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+
+        }*/
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(setViewId());
         findView();

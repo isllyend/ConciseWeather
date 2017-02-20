@@ -9,6 +9,9 @@ import android.view.WindowManager;
  * Email:isllyend@gmail.com
  */
 
+/**
+ * 获取屏幕高宽工具类
+ */
 public class ScreenUtils {
     public static DisplayMetrics getDispaly(Context context){
         WindowManager wm = (WindowManager) context

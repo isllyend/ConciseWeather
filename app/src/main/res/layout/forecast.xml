@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    android:background="#8000">
+    >
 
    <!-- <TextView
         android:layout_width="wrap_content"
@@ -15,14 +15,19 @@
         android:text="预报"
         android:textColor="#fff"
         android:textSize="20sp"/>-->
-
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"/>
     <LinearLayout
         android:id="@+id/forecast_layout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </LinearLayout>
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
