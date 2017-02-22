@@ -10,7 +10,6 @@ import android.widget.PopupWindow;
 
 import isllyend.top.conciseweather.R;
 import isllyend.top.conciseweather.adapter.PopupWindowAdapter;
-import isllyend.top.conciseweather.adapter.PopupWindowAdapter2;
 import isllyend.top.conciseweather.gson.Weather;
 
 /**
@@ -34,17 +33,17 @@ public class ShowUtils {
         return popupWindow;
     }
 
-    public static PopupWindow createPw2(int layoutId, Context context, Weather weather){
+  /*  public static PopupWindow createPw2(int layoutId, Context context, Weather weather){
 
         int height=ScreenUtils.getDispaly(context).heightPixels;
         View view= LayoutInflater.from(context).inflate(layoutId,null);
         PopupWindow popupWindow=new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, height/10*8,false);
         popupWindow.setFocusable(true);
-        PopupWindowAdapter2 popupWindowAdapter=new PopupWindowAdapter2(weather,context);
+        HourlyForecast popupWindowAdapter=new HourlyForecast(weather,context);
         RecyclerView recyclerView= (RecyclerView) view.findViewById(R.id.rv_hourly_forecast_more);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(popupWindowAdapter);
         return popupWindow;
-    }
+    }*/
 }

@@ -12,11 +12,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>-->
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         >
+
+        <xyz.matteobattilana.library.WeatherView
+            android:visibility="gone"
+            android:id="@+id/weatherview"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            app:angle="-3"
+            app:fadeOutTime="1000"
+            app:fps="40"
+            app:lifeTime="2200"
+            app:numParticles="55"
+            app:orientationMode="ENABLE"
+            app:startingWeather="RAIN"/>
+
+           <isllyend.top.conciseweather.custom.RippleImageView
+               app:layout_scrollFlags="scroll|enterAlways"
+               android:visibility="gone"
+               android:id="@+id/rippleImageView"
+               android:layout_width="match_parent"
+               android:layout_height="250dp"
+               android:layout_alignParentLeft="true"
+               android:layout_centerHorizontal="true"
+               android:background="@android:color/transparent"
+               app:imageViewHeigth="40dp"
+               app:imageViewWidth="40dp"
+               app:show_spacing_time="1000">
+           </isllyend.top.conciseweather.custom.RippleImageView>
+
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
@@ -35,21 +64,20 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
-                    app:popupTheme="@style/ToolbarPopupTheme"
                     app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ToolbarPopupTheme"
                     >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                       >
+                        >
 
                         <TextView
                             android:id="@+id/title_city"
@@ -91,6 +119,7 @@
 
                     <include layout="@layout/suggestion"/>
 
+                    <include layout="@layout/sunrise"/>
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>

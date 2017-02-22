@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="WeatherView-1.1.0.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.MatteoBattilana/WeatherView/1.1.0.3/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.MatteoBattilana/WeatherView/1.1.0.3/jars/libs/LeonidsLib-1.3.2.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.MatteoBattilana/WeatherView/1.1.0.3/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.MatteoBattilana/WeatherView/1.1.0.3/eae17e55dc901c9e6507dc699ca582d5c624ace7/WeatherView-1.1.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

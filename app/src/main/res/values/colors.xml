@@ -3,4 +3,6 @@
     <color name="colorPrimary">#89cff0</color>
     <color name="colorPrimaryDark">#79cff9</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBackgroundDark">#7799cc</color>
+    <color name="colorCloudyBackground">#808080</color>
 </resources>

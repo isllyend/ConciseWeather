@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity {
 
     private void initLocation() {
         LocationClientOption option=new LocationClientOption();
-        option.setScanSpan(10*60*1000);//update time
+        option.setScanSpan(60*60*1000);//update time
         option.setIsNeedAddress(true);// show  Address
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         locationClient.setLocOption(option);
@@ -124,11 +125,18 @@ public class MainActivity extends BaseActivity {
             }
             closeProgressDialog();
         }
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+            Log.e("Chigo",s+"-->"+i);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        locationClient.stop();
+
     }
     private void showProgressDialog() {
         if (progressDialog==null){

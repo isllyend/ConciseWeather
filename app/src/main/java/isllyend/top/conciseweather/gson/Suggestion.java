@@ -19,38 +19,53 @@ public class Suggestion {
     @SerializedName("trav")
     public Travel travel;
 
+    @SerializedName("air")
+    public Air air;
+
     public UV uv;
     @SerializedName("drsg")
     public Dress dress;
 
     public Flu flu;
-    public class Comfort{
-        @SerializedName("txt")
-        public String info;
-    }
-    public class CarWash{
-        @SerializedName("txt")
-        public String info;
-    }
-    public  class Sport{
-        @SerializedName("txt")
-        public String info;
-    }
-    public class Dress{
-        @SerializedName("txt")
-        public String info;
-    }
-    public class Flu{
-        @SerializedName("txt")
-        public String info;
-    }
-    public class Travel{
-        @SerializedName("txt")
+
+    public class Comfort {
+        @SerializedName("brf")
         public String info;
     }
 
-    public class UV{
-        @SerializedName("txt")
+    public class CarWash {
+        @SerializedName("brf")
+        public String info;
+    }
+
+    public class Sport {
+        @SerializedName("brf")
+        public String info;
+    }
+
+    public class Dress {
+        @SerializedName("brf")
+        public String info;
+    }
+
+    public class Flu {
+        @SerializedName("brf")
+        public String info;
+    }
+
+    public class Travel {
+        @SerializedName("brf")
+        public String info;
+    }
+
+    public class UV {
+        @SerializedName("brf")
+        public String info;
+    }
+
+
+    public class Air {
+        @SerializedName("brf")
         public String info;
     }
 }

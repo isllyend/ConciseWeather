@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-
               android:layout_margin="15dp"
+              android:background="#20ffffff"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/hourlyforecast_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </LinearLayout>
-    <TextView
-        android:background="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-    <TextView
-        android:textColor="#fff"
-        android:id="@+id/tv_hourlyforecast_more"
-        android:gravity="center"
-        android:text="查看24小时天气"
-        android:padding="10dp"
-        android:textSize="16sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

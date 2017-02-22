@@ -20,17 +20,19 @@ import isllyend.top.conciseweather.gson.Weather;
  * Created by Chigo on 2017/1/10.
  * Email:isllyend@gmail.com
  */
-public class PopupWindowAdapter2 extends RecyclerView.Adapter<PopupWindowAdapter2.ViewHolder> {
+public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAdapter.ViewHolder> {
     private Weather weather;
-    private Context context;
-    public PopupWindowAdapter2(Weather weather, Context context) {
+    private Context mContext;
+    public HourlyForecastAdapter(Weather weather) {
         this.weather = weather;
-        this.context=context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.hourly_forecast_more_item,parent,false);
+        if(mContext==null){
+            mContext=parent.getContext();
+        }
+        View view= LayoutInflater.from(mContext).inflate(R.layout.hourly_forecast_item,parent,false);
         ViewHolder viewHolder=new ViewHolder(view);
         return viewHolder;
     }
@@ -39,27 +41,29 @@ public class PopupWindowAdapter2 extends RecyclerView.Adapter<PopupWindowAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         List<HourlyForecast> data=weather.hourlyForecastList;
         HourlyForecast hourlyForecast=data.get(position);
-        holder.tv_date.setText(hourlyForecast.date.split(" ")[1]);
+        holder.tv_time.setText(hourlyForecast.date.split(" ")[1]);
         holder.tv_tmp.setText(hourlyForecast.tmp+"℃");
-        holder.tv_wind.setText("风向："+hourlyForecast.wind.dir+hourlyForecast.wind.sc+"\n"+hourlyForecast.wind.spd+" kmph");
         final String condCode="http://files.heweather.com/cond_icon/"+weather.dailyForecastlist.get(0).more.code_d+".png";
-                Glide.with(context).load(condCode).into(holder.iv_left_img);
+                Glide.with(mContext).load(condCode).into(holder.iv_img);
+
+        if (position==0){
+            holder.tv_time.setText("现在");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return weather.dailyForecastlist.size();
+        return weather.hourlyForecastList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_date,tv_tmp,tv_wind;
-        ImageView iv_left_img;
+        TextView tv_time,tv_tmp;
+        ImageView iv_img;
         public ViewHolder(View itemView) {
             super(itemView);
-            tv_date= (TextView) itemView.findViewById(R.id.tv_time);
-            tv_tmp= (TextView) itemView.findViewById(R.id.tv_tmp);
-            iv_left_img= (ImageView) itemView.findViewById(R.id.iv_img);
-            tv_wind= (TextView) itemView.findViewById(R.id.tv_wind);
+            tv_time= (TextView) itemView.findViewById(R.id.tv_time);
+            tv_tmp= (TextView) itemView.findViewById(R.id.tv_tmp_item);
+            iv_img= (ImageView) itemView.findViewById(R.id.iv_img);
         }
     }
 }
