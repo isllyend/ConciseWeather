@@ -29,6 +29,7 @@ public class RippleImageView extends RelativeLayout {
     private static final int IMAMGEVIEW_SIZE = 80;
     /**三张波纹图片*/
     private static final int SIZE =3 ;
+    private boolean isPlay=false;
 
     /**动画默认循环播放时间*/
     private  int show_spacing_time=SHOW_SPACING_TIME;
@@ -141,9 +142,13 @@ public class RippleImageView extends RelativeLayout {
      * 开始水波纹动画
      */
     public void startWaveAnimation() {
+        isPlay=true;
         imgs[0].startAnimation(mAnimationSet[0]);
         mHandler.sendEmptyMessageDelayed(MSG_WAVE2_ANIMATION, show_spacing_time);
         mHandler.sendEmptyMessageDelayed(MSG_WAVE3_ANIMATION, show_spacing_time * 2);
+    }
+    public boolean isPlaying(){
+        return isPlay;
     }
 
     /**
@@ -153,6 +158,7 @@ public class RippleImageView extends RelativeLayout {
         for (int i = 0; i <imgs.length ; i++) {
             imgs[i].clearAnimation();
         }
+        isPlay=false;
     }
     /**获取播放的速度*/
     public int getShow_spacing_time() {

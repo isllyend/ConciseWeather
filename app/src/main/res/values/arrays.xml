@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="examples">
+        <item>简约天气</item>
+        <item>左右滑动可删除城市</item>
+        <item>长按设置默认城市</item>
+    </string-array>
+</resources>

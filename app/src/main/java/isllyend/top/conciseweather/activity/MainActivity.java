@@ -1,15 +1,9 @@
-package isllyend.top.conciseweather;
+package isllyend.top.conciseweather.activity;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -17,13 +11,19 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
-import java.util.ArrayList;
+import org.litepal.LitePal;
+import org.litepal.LitePalDB;
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
+
+import isllyend.top.conciseweather.R;
+import isllyend.top.conciseweather.db.CityCtrl;
 
 public class MainActivity extends BaseActivity {
     private LocationClient locationClient;
     private ProgressDialog progressDialog;
-    private SharedPreferences pre;
+//    private SharedPreferences pre;
     private String newCityName;
 
     @Override
@@ -31,25 +31,9 @@ public class MainActivity extends BaseActivity {
 
         locationClient=new LocationClient(getApplicationContext());
         locationClient.registerLocationListener(new MyLocationListener());
-        pre= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        List<String> perList=new ArrayList<>();
+//        pre= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-            perList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        /*if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
-            perList.add(Manifest.permission.READ_PHONE_STATE);
-        }*/
-        /*if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-            perList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }*/
-        if (!perList.isEmpty()){
-            String[] pers=perList.toArray(new String[perList.size()]);
-            ActivityCompat.requestPermissions(MainActivity.this,pers,1);
-        }else {
-            requestLocation();
-        }
-    }
+}
 
     @Override
     protected void initEvent() {
@@ -58,12 +42,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        LitePalDB litePalDB = new LitePalDB("CityCtrl", 1);
+        litePalDB.addClassName(CityCtrl.class.getName());
+        LitePal.use(litePalDB);
     }
 
     @Override
     protected void loadData() {
-
+            requestLocation();
     }
 
     @Override
@@ -80,33 +66,13 @@ public class MainActivity extends BaseActivity {
 
     private void initLocation() {
         LocationClientOption option=new LocationClientOption();
-        option.setScanSpan(60*60*1000);//update time
+        option.setScanSpan(60*1000);//update time
         option.setIsNeedAddress(true);// show  Address
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         locationClient.setLocOption(option);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 1:
-                if (grantResults.length>0){
-                    for (int res:grantResults){
-                        if (res!=PackageManager.PERMISSION_GRANTED){
-                            Toast.makeText(this, "必须开启所有权限才能使用!", Toast.LENGTH_SHORT).show();
-                            finish();
-                            return;
-                        }
-                    }
-                    requestLocation();
-                }
-                else {
-                    Toast.makeText(this, "error!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-        }
-    }
+
     private class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -128,7 +94,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
-            Log.e("Chigo",s+"-->"+i);
+//            Log.e("Chigo",s+"-->"+i);
         }
     }
 
@@ -152,19 +118,24 @@ public class MainActivity extends BaseActivity {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
-        String oldCityName=pre.getString("city",null);//上次的数据
-        if (oldCityName == null || oldCityName != newCityName) {
-            Intent intent = new Intent(this, WeatherActivity.class);
+        Intent intent = new Intent(this, WeatherActivity.class);
+        List<CityCtrl> ctrls= DataSupport.findAll(CityCtrl.class);
+        CityCtrl ctrl=null;
+        for (CityCtrl c:ctrls){
+            if (c.getDefNum()==1){
+                ctrl=c;
+                break;
+            }
+        }
+
+        if (ctrl!=null){
+            intent.putExtra("cityName", ctrl.getLocation());
+            startActivity(intent);
+        }else {
             intent.putExtra("cityName", newCityName);
             startActivity(intent);
             Toast.makeText(this, "自动定位成功！当前的城市："+newCityName, Toast.LENGTH_SHORT).show();
-            finish();
-        } else if (oldCityName == newCityName) {
-            if (pre.getString("weather", null) != null) {
-                Intent intent = new Intent(this, WeatherActivity.class);
-                startActivity(intent);
-                finish();
-            }
         }
+            finish();
     }
 }

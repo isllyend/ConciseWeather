@@ -46,4 +46,43 @@
         <attr name="imageViewWidth" format="dimension"></attr>
         <attr name="imageViewHeigth" format="dimension"></attr>
     </declare-styleable>
-</resources>
+  <!--  <attr name="sb_shadow_radius" format="reference|dimension"/>       &lt;!&ndash;阴影半径&ndash;&gt;
+    <attr name="sb_shadow_offset" format="reference|dimension"/>       &lt;!&ndash;阴影偏移&ndash;&gt;
+    <attr name="sb_shadow_color" format="reference|color"/>            &lt;!&ndash;阴影颜色&ndash;&gt;
+    <attr name="sb_uncheck_color" format="reference|color"/>           &lt;!&ndash;关闭颜色&ndash;&gt;
+    <attr name="sb_checked_color" format="reference|color"/>           &lt;!&ndash;开启颜色&ndash;&gt;
+    <attr name="sb_border_width" format="reference|dimension"/>        &lt;!&ndash;边框宽度&ndash;&gt;
+    <attr name="sb_checkline_color" format="reference|color"/>         &lt;!&ndash;开启指示器颜色&ndash;&gt;
+    <attr name="sb_checkline_width" format="reference|dimension"/>     &lt;!&ndash;开启指示器线宽&ndash;&gt;
+    <attr name="sb_uncheckcircle_color" format="reference|color"/>     &lt;!&ndash;关闭指示器颜色&ndash;&gt;
+    <attr name="sb_uncheckcircle_width" format="reference|dimension"/> &lt;!&ndash;关闭指示器线宽&ndash;&gt;
+    <attr name="sb_uncheckcircle_radius" format="reference|dimension"/>&lt;!&ndash;关闭指示器半径&ndash;&gt;
+    <attr name="sb_checked" format="reference|boolean"/>               &lt;!&ndash;是否选中&ndash;&gt;
+    <attr name="sb_shadow_effect" format="reference|boolean"/>         &lt;!&ndash;是否启用阴影&ndash;&gt;
+    <attr name="sb_effect_duration" format="reference|integer"/>       &lt;!&ndash;动画时间，默认300ms&ndash;&gt;
+    <attr name="sb_button_color" format="reference|color"/>            &lt;!&ndash;按钮颜色&ndash;&gt;
+    <attr name="sb_show_indicator" format="reference|boolean"/>        &lt;!&ndash;是否显示指示器，默认true：显示&ndash;&gt;
+    <attr name="sb_background" format="reference|color"/>              &lt;!&ndash;背景色，默认白色&ndash;&gt;
+    <attr name="sb_enable_effect" format="reference|boolean"/> -->        <!--是否启用特效，默认true-->
+
+    <declare-styleable name="SegmentControl">
+        <attr name="cornerRadius" format="dimension|reference"/>
+        <attr name="normalColor" format="color|reference" />
+        <attr name="selectedColor" format="color|reference" />
+        <attr name="backgroundColors" format="color|reference"/>
+        <attr name="textColors" format="color|reference"/>
+        <attr name="textss" format="string|reference"/>
+        <attr name="android:textSize"/>
+        <attr name="android:orientation" />
+        <!-- 外部边框的width -->
+        <attr name="boundWidth" format="dimension|reference"/>
+        <!-- 内部边框的width -->
+        <attr name="separatorWidth" format="dimension|reference"/>
+        <attr name="gaps" format="dimension|reference"/>
+        <attr name="horizonGap" format="dimension|reference"/>
+        <attr name="verticalGap" format="dimension|reference"/>
+    </declare-styleable>
+
+
+
+    </resources>

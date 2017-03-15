@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import isllyend.top.conciseweather.R;
 import isllyend.top.conciseweather.gson.DailyForecast;
 import isllyend.top.conciseweather.gson.Weather;
+import isllyend.top.conciseweather.util.GlideUtil;
 
 /**
  * Created by Chigo on 2017/1/10.
@@ -45,7 +44,8 @@ public class PopupWindowAdapter extends RecyclerView.Adapter<PopupWindowAdapter.
         holder.tv_wind.setText("风向："+dailyForecast.wind.dir+dailyForecast.wind.sc+"级");
         holder.tv_astro.setText("日出/日落："+dailyForecast.astro.sr+"/"+dailyForecast.astro.ss);
         final String condCode="http://files.heweather.com/cond_icon/"+dailyForecast.more.code_d+".png";
-                Glide.with(context).load(condCode).into(holder.iv_left_img);
+//                Glide.with(context).load(condCode).into(holder.iv_left_img);
+        GlideUtil.loadIntoUseFitWidth(context,condCode,R.mipmap.ic_error,holder.iv_left_img);
     }
 
     @Override

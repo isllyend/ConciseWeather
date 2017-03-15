@@ -115,7 +115,7 @@
 
                     <include layout="@layout/hourly_forecast"/>
 
-                    <include layout="@layout/aqi"/>
+                    <!--<include layout="@layout/aqi"/>-->
 
                     <include layout="@layout/suggestion"/>
 

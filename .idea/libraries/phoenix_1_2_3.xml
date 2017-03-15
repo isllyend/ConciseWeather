@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="phoenix-1.2.3">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.yalantis/phoenix/1.2.3/res" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.yalantis/phoenix/1.2.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/0887d684d4a58184c23a95ce1f0884750171d54f/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/0887d684d4a58184c23a95ce1f0884750171d54f/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

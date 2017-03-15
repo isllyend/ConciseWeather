@@ -1,8 +1,10 @@
-package isllyend.top.conciseweather;
+package isllyend.top.conciseweather.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+
+import isllyend.top.conciseweather.util.ActivityCollector;
 
 /**
  * Created by Chigo on 2017/2/7.
@@ -26,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(setViewId());
+        ActivityCollector.addActivity(this);
         findView();
         initView();
         initEvent();
@@ -47,5 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     //返回布局id
     protected abstract int setViewId();
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
 }

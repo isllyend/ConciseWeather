@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="AvatarImageView-1.0.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/5cd38766f8ac814e17a9d03aa413588295759c43/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/5cd38766f8ac814e17a9d03aa413588295759c43/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.carbs.android/AvatarImageView/1.0.1/ade0f02454c29e416465d8d51f516f4c7e4719a8/AvatarImageView-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

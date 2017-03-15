@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">简约天气</string>
+    <string name="sug_title">生活指数</string>
+    <string name="sunrise_title">日出日落</string>
+    <string name="powered_by">Powered by Chigo</string>
+    <string name="wel_top_title">简约天气 简单生活</string>
+    <string name="string_serach">搜索结果</string>
+    <string name="string_serch_city">搜索城市...</string>
+    <string name="isllyend_gmail">isllyend@gmail.com</string>
 </resources>

@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import isllyend.top.conciseweather.R;
 import isllyend.top.conciseweather.gson.HourlyForecast;
 import isllyend.top.conciseweather.gson.Weather;
+import isllyend.top.conciseweather.util.GlideUtil;
 
 /**
  * Created by Chigo on 2017/1/10.
@@ -44,7 +43,8 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         holder.tv_time.setText(hourlyForecast.date.split(" ")[1]);
         holder.tv_tmp.setText(hourlyForecast.tmp+"℃");
         final String condCode="http://files.heweather.com/cond_icon/"+weather.dailyForecastlist.get(0).more.code_d+".png";
-                Glide.with(mContext).load(condCode).into(holder.iv_img);
+//                Glide.with(mContext).load(condCode).into(holder.iv_img);
+        GlideUtil.loadIntoUseFitWidth(mContext,condCode,R.mipmap.ic_error,holder.iv_img);
 
         if (position==0){
             holder.tv_time.setText("现在");

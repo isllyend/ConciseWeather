@@ -16,11 +16,13 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import isllyend.top.conciseweather.R;
 
@@ -71,12 +73,15 @@ public class WeatherView extends View {
         super(context, attrs);
 
         initAttrs(context, attrs);
+     /*   setDefaultTime(mStartTime,mEndTime);
+        setmCurrentTime(mCurrentTime);*/
     }
 
     public WeatherView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initAttrs(context, attrs);
+
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -105,8 +110,8 @@ public class WeatherView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
 
-        setDefaultTime(mStartTime,mEndTime);
-        setmCurrentTime(mCurrentTime);
+        setDefaultTime();
+
     }
 
     private void init() {
@@ -126,24 +131,35 @@ public class WeatherView extends View {
         mArcDashHeight = getResources().getDimension(R.dimen.default_arc_dash_height);
         mDefaultWeatherIconSize = getResources().getDimension(R.dimen.default_weather_icon_size);
         mSunColor = getResources().getColor(R.color.default_sun_color);
-        setDefaultTime(mStartTime,mEndTime);
-        setmCurrentTime(mCurrentTime);
+        setDefaultTime();
+
     }
 
-    public void setDefaultTime(String startTime,String endTime) {
+    public void setStarTime(String time){
+        mStartTime=time;
+    }
+    public void setEndTime(String time){
+        mEndTime=time;
+    }
+    private void setDefaultTime() {
 
         mDateFormat = new SimpleDateFormat(DATE_FORMAT);
 
-            mStartTime = (startTime);
+        if (TextUtils.isEmpty(mStartTime)) {
+            mStartTime = getResources().getString(R.string.default_start_time);
+        }
 
-            mEndTime = (endTime);
+        if (TextUtils.isEmpty(mEndTime)) {
+            mEndTime = getResources().getString(R.string.default_end_time);
+        }
 
+        if (TextUtils.isEmpty(mCurrentTime)) {
+            mCurrentTime = mDateFormat.format(new Date());
+        }
 
     }
 
-    public void setmCurrentTime(String currentTime){
-            mCurrentTime = (currentTime);
-    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);

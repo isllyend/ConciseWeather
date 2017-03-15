@@ -5,4 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackgroundDark">#7799cc</color>
     <color name="colorCloudyBackground">#808080</color>
+    <color name="colorOvercast">#ADADAD</color>
+    <color name="text_color">#222222</color>
+    <color name="theme_purple">#8d4bbb</color>
+    <color name="theme_orange">#FF6100</color>
+    <color name="theme_green">#238E23</color>
+    <color name="theme_gray">#bfbfbf</color>
 </resources>

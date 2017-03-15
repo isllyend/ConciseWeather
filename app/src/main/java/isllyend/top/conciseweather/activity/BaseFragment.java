@@ -1,4 +1,4 @@
-package isllyend.top.conciseweather;
+package isllyend.top.conciseweather.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //取消状态栏
         View view = inflater.inflate(setViewId(), container, false);
         findViews(view);// 初始化控件
         initView();// 初始化界面

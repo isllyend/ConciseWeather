@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_city_choose"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="isllyend.top.conciseweather.activity.CityChooseActivity">
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/choose_city_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/linearlayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/title"/>
+        <com.wayww.edittextfirework.FireworkView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:id="@+id/fire_work"/>
+        <EditText
+            android:maxLines="1"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/et_serach"
+            android:gravity="center"
+            android:hint="@string/string_serch_city"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:gravity="start"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_one"
+                android:background="@color/colorPrimary"
+                android:layout_width="4dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:text="@string/string_serach"
+                android:id="@+id/tv_one_title"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <ListView
+            android:layout_margin="15dp"
+            android:scrollbars="none"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:id="@+id/lv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+    </LinearLayout>
+</RelativeLayout>

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 <item
-    android:id="@+id/backup"
-    android:title="BackUp"
+    android:id="@+id/setting"
+    android:title="设置"
     app:showAsAction="never"
     />
     <item
-        android:id="@+id/delete"
-        android:title="Delete"
+        android:id="@+id/about"
+        android:title="关于"
         app:showAsAction="never"
         />
 </menu>

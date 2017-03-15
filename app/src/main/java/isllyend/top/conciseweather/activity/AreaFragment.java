@@ -1,23 +1,27 @@
-package isllyend.top.conciseweather;
+package isllyend.top.conciseweather.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import isllyend.top.conciseweather.R;
 import isllyend.top.conciseweather.db.City;
 import isllyend.top.conciseweather.db.County;
 import isllyend.top.conciseweather.db.Province;
@@ -42,6 +46,7 @@ public class AreaFragment extends BaseFragment {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> dataList = new ArrayList<>();
+    private RelativeLayout relativeLayout;
 
     //列表
     private List<Province> provinceList;
@@ -53,13 +58,24 @@ public class AreaFragment extends BaseFragment {
     private City selectCity;
 
     private int currentLevel;
-
+    private final int RESULT_CODE=2;
 
     @Override
     protected void findViews(View view) {
         titleText = (TextView) view.findViewById(R.id.tv_title);
         btn_back = (Button) view.findViewById(R.id.btn_back);
         listView = (ListView) view.findViewById(R.id.list_view);
+        relativeLayout= (RelativeLayout) view.findViewById(R.id.relaout_titlebar);
+        LitePal.useDefault();
+    }
+    public List<Province> getProvinceList(){
+         return provinceList;
+    }
+    public List<County> getCountyList(){
+        return countyList;
+    }
+    public List<City> getCityList(){
+        return cityList;
     }
 
     @Override
@@ -74,18 +90,11 @@ public class AreaFragment extends BaseFragment {
                     selectCity = cityList.get(i);
                     queryConty();
                 } else if (currentLevel == LEVEL_COUNTY) {
-                    String weatherName = countyList.get(i).getWeatherId();
-                    if (getActivity() instanceof MainActivity) {
-                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                        intent.putExtra("weather_name", weatherName);
-                        startActivity(intent);
+                    String weatherName = countyList.get(i).getCountyName();
+                        Intent intent = new Intent();
+                        intent.putExtra("CityName", weatherName);
+                        getActivity().setResult(RESULT_CODE,intent);
                         getActivity().finish();
-                    } else if (getActivity() instanceof WeatherActivity) {
-                        WeatherActivity activity = (WeatherActivity) getActivity();
-                        activity.drawerLayout.closeDrawers();
-                        activity.swipeRefreshLayout.setRefreshing(true);
-                        activity.requestWeather(weatherName, null);
-                    }
                 }
             }
         });
@@ -106,6 +115,10 @@ public class AreaFragment extends BaseFragment {
     protected void initView() {
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
+        int currentColorId= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).getInt("defaultColorId",-1);
+        if (currentColorId!=-1){
+            relativeLayout.setBackgroundColor(getResources().getColor(currentColorId));
+        }
     }
 
     @Override
@@ -127,8 +140,9 @@ public class AreaFragment extends BaseFragment {
     /**
      * 查询全国的省份，优先从数据库查询，如果没有查询到在去服务器上查询
      */
-    private void queryProvince() {
+    public void queryProvince() {
         titleText.setText("中国");
+
         btn_back.setVisibility(View.GONE);
         provinceList = DataSupport.findAll(Province.class);
         if (provinceList.size() > 0) {
@@ -145,7 +159,8 @@ public class AreaFragment extends BaseFragment {
         }
     }
 
-    private void queryFromServer(String address, final String type) {
+
+    public void queryFromServer(String address, final String type) {
         showProgressDialog();
         HttpUtil.sendOkhttpRequest(address, new Callback() {
             @Override
@@ -191,7 +206,7 @@ public class AreaFragment extends BaseFragment {
         });
     }
 
-    private void queryConty() {
+    public void queryConty() {
         titleText.setText(selectCity.getCityName());
         btn_back.setVisibility(View.VISIBLE);
         countyList = DataSupport.where("cityid=?", String.valueOf(selectCity.getId())).find(County.class);
@@ -212,7 +227,7 @@ public class AreaFragment extends BaseFragment {
 
     }
 
-    private void queryCity() {
+    public void queryCity() {
         titleText.setText(selectProvince.getProvinceName());
         btn_back.setVisibility(View.VISIBLE);
         cityList = DataSupport.where("provinceid=?", String.valueOf(selectProvince.getId())).find(City.class);
