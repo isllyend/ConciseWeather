@@ -1,10 +1,15 @@
 package isllyend.top.conciseweather.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +20,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,22 +42,29 @@ import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import isllyend.top.conciseweather.R;
 import isllyend.top.conciseweather.adapter.HourlyForecastAdapter;
 import isllyend.top.conciseweather.adapter.SuggestionAdapter;
 import isllyend.top.conciseweather.bean.Suggestion;
 import isllyend.top.conciseweather.custom.RippleImageView;
 import isllyend.top.conciseweather.db.CityCtrl;
+import isllyend.top.conciseweather.gson.Alarms;
 import isllyend.top.conciseweather.gson.DailyForecast;
 import isllyend.top.conciseweather.gson.Weather;
 import isllyend.top.conciseweather.service.AutoUpdateService;
 import isllyend.top.conciseweather.util.ActivityCollector;
+import isllyend.top.conciseweather.util.BitmapUtil;
 import isllyend.top.conciseweather.util.ChartUtil;
 import isllyend.top.conciseweather.util.DensityUtils;
 import isllyend.top.conciseweather.util.GlideUtil;
 import isllyend.top.conciseweather.util.HttpUtil;
+import isllyend.top.conciseweather.util.NotificationUtil;
 import isllyend.top.conciseweather.util.ScreenUtils;
 import isllyend.top.conciseweather.util.ShowUtils;
 import isllyend.top.conciseweather.util.Utility;
@@ -99,6 +110,10 @@ public class WeatherActivity extends BaseActivity {
     private List<isllyend.top.conciseweather.bean.Suggestion> suggestions;
     private long exitTime = 0;
 
+    private FloatingActionButton fab_share;
+
+    private SharedPreferences prefs;
+    private ImageView iv_bg;
     @Override
     protected void findView() {
         //初始化控件
@@ -121,11 +136,58 @@ public class WeatherActivity extends BaseActivity {
         sunriseView = (isllyend.top.conciseweather.custom.WeatherView) findViewById(R.id.sunrise);
         rippleImageView = (RippleImageView) findViewById(R.id.rippleImageView);
         lv_suggestion = (ListView) findViewById(R.id.lv_suggestion);
+        fab_share = (FloatingActionButton) findViewById(R.id.fab_share);
+        iv_bg= (ImageView) findViewById(R.id.bg_weather);
     }
 
 
     @Override
     protected void initEvent() {
+        weatherLayout.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                int y=scrollY-oldScrollY;
+                if (y>0){
+                    fab_share.hide();
+                }else {
+                    fab_share.show();
+                }
+            }
+        });
+
+        fab_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap=drawerLayout.getDrawingCache();
+                BitmapUtil.saveBitmap(bitmap);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(WeatherActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                final View layout = inflater.inflate(R.layout.dialog_shot, null);//获取自定义布局
+                builder.setView(layout);
+
+                final AlertDialog dialog = builder.create();
+                ImageView imageView= (ImageView) layout.findViewById(R.id.iv);
+                imageView.setImageBitmap(bitmap);
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        drawerLayout.destroyDrawingCache();
+                        fab_share.setVisibility(View.VISIBLE);
+                    }
+                });
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                showShare(dialog);
+
+            }
+        });
+
         swipeRefreshLayout.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -138,7 +200,6 @@ public class WeatherActivity extends BaseActivity {
         tv_forecast_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String weatherString = prefs.getString("weather", null);
                 weather = handleWeatherResponse(weatherString);
                 if (weather == null) {
@@ -184,7 +245,7 @@ public class WeatherActivity extends BaseActivity {
                             radioGroup.check(R.id.radio_2);
                         }
 
-                        final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                        final SharedPreferences.Editor editor = prefs.edit();
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(RadioGroup rg, int i) {
@@ -244,7 +305,6 @@ public class WeatherActivity extends BaseActivity {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 final int currentColorId = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt("defaultColorId", -1);
-                Log.e("Chigo", "currentColorId===" + currentColorId);
                 if (currentColorId != -1) {
                     changeColor(currentColorId);
                 } else {
@@ -290,8 +350,16 @@ public class WeatherActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+         prefs= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         weatherString = prefs.getString("weather", null);
+        int bl_sb1=prefs.getInt("bl_sb2",-1);
+        if (weatherString!=null&&bl_sb1==1){
+            Weather weather1=Utility.handleWeatherResponse(weatherString);
+            Alarms alarms=weather1.alarmses.get(0);
+            if (alarms.level!=null){
+                NotificationUtil.showNoification(this,alarms.title,alarms.txt);
+            }
+        }
         weatherName = getIntent().getStringExtra("weather_name");
         mWeatherView.startAnimation();
         maxTemp = new ArrayList<>();
@@ -302,6 +370,10 @@ public class WeatherActivity extends BaseActivity {
         weatherInfoText.setFocusable(true);
         weatherInfoText.setFocusableInTouchMode(true);
         weatherInfoText.requestFocus();
+        //设置能否缓存图片信息（drawing cach
+        drawerLayout.setDrawingCacheEnabled(true);
+        //如果能够缓存图片，则创建图片缓存
+        drawerLayout.buildDrawingCache();
 
         LitePalDB litePalDB = new LitePalDB("CityCtrl", 1);
         litePalDB.addClassName(CityCtrl.class.getName());
@@ -332,6 +404,22 @@ public class WeatherActivity extends BaseActivity {
         suggestions = new ArrayList<>();
         suggestionAdapter = new SuggestionAdapter(suggestions, this);
         lv_suggestion.setAdapter(suggestionAdapter);
+
+
+        Intent intent=getIntent();
+        String path1=prefs.getString("bg_weather",null);
+        toolbar.setBackgroundColor(Color.TRANSPARENT);
+
+        if (path1!=null){
+            iv_bg.setVisibility(View.VISIBLE);
+            toolbar.setAlpha(0.4f);
+//            toolbar.setBackgroundColor(getResources().getColor(R.color.theme_green));
+            GlideUtil.loadImageWithPath(this,path1,iv_bg);
+        }else {
+            toolbar.setAlpha(1f);
+            iv_bg.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -479,13 +567,13 @@ public class WeatherActivity extends BaseActivity {
         temp.add(sug_uv);
         Suggestion sug_flu = new Suggestion(flu, R.mipmap.sug_flu, "感冒");
         temp.add(sug_flu);
-        Suggestion sug_comf = new Suggestion(comfort, R.mipmap.sug_air, "气候");
+        Suggestion sug_comf = new Suggestion(comfort, R.mipmap.ic_qihou, "气候");
         temp.add(sug_comf);
         Suggestion sug_run = new Suggestion(sport, R.mipmap.sug_run, "运动");
         temp.add(sug_run);
         Suggestion sug_washCar = new Suggestion(carWash, R.mipmap.sug_washcar, "洗车");
         temp.add(sug_washCar);
-        Suggestion sug_tral = new Suggestion(trav, R.mipmap.sug_tral, "出行");
+        Suggestion sug_tral = new Suggestion(trav, R.mipmap.ic_travel, "出行");
         temp.add(sug_tral);
         Suggestion sug_air = new Suggestion(dsrg, R.mipmap.sug_air, "空气");
         temp.add(sug_air);
@@ -494,8 +582,12 @@ public class WeatherActivity extends BaseActivity {
         suggestionAdapter.notifyDataSetChanged();
 
         weatherLayout.setVisibility(View.VISIBLE);
-        Intent intentService = new Intent(this, AutoUpdateService.class);
-        startService(intentService);
+        int isOpen=prefs.getInt("bl_sb3",-1);
+        if (isOpen==1){
+            //开启后台刷新
+           Intent intentService = new Intent(this, AutoUpdateService.class);
+           startService(intentService);
+       }
 
 
     }
@@ -521,7 +613,7 @@ public class WeatherActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (weather != null && "ok".equals(weather.status)) {
-                            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                            SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
@@ -673,5 +765,72 @@ public class WeatherActivity extends BaseActivity {
         if (rippleImageView.isPlaying()) {
             rippleImageView.stopWaveAnimation();
         }
+    }
+
+    //一键分享
+    private void showShare(final AlertDialog dialog) {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        // title标题，印象笔记、邮箱、信息、微信、人人网、QQ和QQ空间使用
+//        oks.setTitle("简约天气");
+        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
+//        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+//        oks.setText("最近天气状况");
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+//        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImagePath(Environment.getExternalStorageDirectory()+"/cweather/share.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+//        oks.setUrl("http://sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+//        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+//        oks.setSite("ShareSDK");c
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+//        oks.setSiteUrl("http://sharesdk.cn");
+
+    oks.setCallback(new PlatformActionListener() {
+        @Override
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                }
+            });
+
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                }
+            });
+        }
+    });
+// 启动分享GUI
+        oks.show(this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        drawerLayout.destroyDrawingCache();
     }
 }

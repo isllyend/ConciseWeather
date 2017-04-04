@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity {
     private void showProgressDialog() {
         if (progressDialog==null){
             progressDialog=new ProgressDialog(this);
-            progressDialog.setMessage("正在定位....");
+            progressDialog.setMessage("loading....");
             progressDialog.setCancelable(false);
         }
         progressDialog.show();

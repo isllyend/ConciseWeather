@@ -47,8 +47,8 @@ public class CityCtrlFragment extends BaseFragment implements OnMenuItemClickLis
     private SwipeDismissListView swipeDismissListView;
     private List<CityCtrl> dataLists;
     private CityCtrlListViewAdapter cityCtrlListViewAdapter;
-    private final int REQUEST_CODE = 1;
-    private final int RESULT_CODE = 2;
+    private final int REQUEST_CODE = 11;
+    private final int RESULT_CODE = 22;
     private FadingTextView fadingTextView;
 
     private FragmentManager fragmentManager;

@@ -26,7 +26,7 @@
                     android:layout_width="76dp"
                     android:layout_height="76dp"/>
                 <TextView
-                    android:textColor="#000"
+                    android:textColor="@color/colorPrimary"
                     android:id="@+id/tv_app_name"
                     android:textSize="24sp"
                     android:layout_marginTop="15dp"
@@ -90,7 +90,7 @@
                 <ImageView
                     android:id="@+id/iv_imag2"
                     android:tint="@color/colorPrimary"
-                    android:src="@mipmap/ic_about_other"
+                    android:src="@mipmap/author"
                     android:scaleType="centerCrop"
                     android:layout_width="30dp"
                     android:layout_height="30dp"/>
@@ -98,7 +98,7 @@
                     android:id="@+id/tv_title2"
                     android:layout_gravity="center"
                     android:textSize="18sp"
-                    android:text="其他"
+                    android:text="开发者"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
@@ -131,6 +131,86 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/icon_qq"
+                    android:tint="#666"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+                <TextView
+                    android:textColor="#666"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:text="@string/qq"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/ic_github"
+                    android:tint="#666"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+                <TextView
+                    android:textColor="#666"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:text="@string/str_github"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_imag3"
+                    android:tint="@color/colorPrimary"
+                    android:src="@mipmap/ic_thank"
+                    android:scaleType="centerCrop"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:id="@+id/tv_title3"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:text="感谢"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:background="#20666666"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
+                android:layout_marginLeft="40dp"
+                android:textColor="#666"
+                android:layout_gravity="left"
+                android:text=""
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

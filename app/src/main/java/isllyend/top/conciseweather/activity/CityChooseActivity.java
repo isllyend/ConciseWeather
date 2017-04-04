@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -51,7 +50,7 @@ public class CityChooseActivity extends BaseActivity {
     private List<Serach> serachs;
     private SerachResultAdapter adapter;
     private SharedPreferences prefs;
-    private final int RESULT_CODE=2;
+    private final int RESULT_CODE=22;
     private TextView tv_one,tv_one_title;
     private RelativeLayout relative_titlebar;
 
@@ -141,7 +140,6 @@ public class CityChooseActivity extends BaseActivity {
                     @Override
                     public void afterTextChanged(Editable editable) {
                         serachs.clear();
-                        Log.e("Chigo","afger==="+editable.toString());
                         if (TextUtils.isEmpty(serResult)){
                             qureySerachData();
                         }
@@ -153,7 +151,7 @@ public class CityChooseActivity extends BaseActivity {
                            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                            imm.hideSoftInputFromWindow(et_search.getWindowToken(), 0);*/
                        }else {
-                           Toast.makeText(CityChooseActivity.this, "很皮！没有该城市@_@", Toast.LENGTH_SHORT).show();
+//                           Toast.makeText(CityChooseActivity.this, "很皮！没有该城市@_@", Toast.LENGTH_SHORT).show();
                        }
                         adapter.notifyDataSetChanged();
 

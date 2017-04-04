@@ -58,7 +58,7 @@ public class AreaFragment extends BaseFragment {
     private City selectCity;
 
     private int currentLevel;
-    private final int RESULT_CODE=2;
+    private final int RESULT_CODE=22;
 
     @Override
     protected void findViews(View view) {

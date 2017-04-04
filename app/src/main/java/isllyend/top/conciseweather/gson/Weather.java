@@ -10,6 +10,8 @@ import java.util.List;
  */
 
 public class Weather {
+    @SerializedName("alarms")
+    public List<Alarms> alarmses;
     public String status;
     public Basic basic;
     public AQI aqi;

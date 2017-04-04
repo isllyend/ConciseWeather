@@ -22,9 +22,10 @@ public class AboutFragment extends BaseFragment {
     private Button btn_add;
     private TextView tv_title;
     private RelativeLayout relativeLayout;
-    private ImageView iv_imag1,iv_imag2;
-    private TextView tv_title1,tv_title2;
+    private ImageView iv_imag1,iv_imag2,iv_imag3;
+    private TextView tv_title1,tv_title2,tv_title3;
     private TextView tv_version;
+    private TextView tv_app_name;
     @Override
     protected void findViews(View view) {
         btn_back= (Button) view.findViewById(R.id.btn_back);
@@ -33,10 +34,13 @@ public class AboutFragment extends BaseFragment {
         relativeLayout= (RelativeLayout) view.findViewById(R.id.relaout_titlebar);
         iv_imag1= (ImageView) view.findViewById(R.id.iv_imag1);
         iv_imag2= (ImageView) view.findViewById(R.id.iv_imag2);
+        iv_imag3= (ImageView) view.findViewById(R.id.iv_imag3);
 
         tv_title1= (TextView) view.findViewById(R.id.tv_title1);
         tv_title2= (TextView) view.findViewById(R.id.tv_title2);
+        tv_title3= (TextView) view.findViewById(R.id.tv_title3);
         tv_version= (TextView) view.findViewById(R.id.tv_app_version);
+        tv_app_name= (TextView) view.findViewById(R.id.tv_app_name);
     }
 
     @Override
@@ -59,9 +63,12 @@ public class AboutFragment extends BaseFragment {
             relativeLayout.setBackgroundColor(getResources().getColor(currentColorId));
             iv_imag1.setColorFilter(getResources().getColor(currentColorId));
             iv_imag2.setColorFilter(getResources().getColor(currentColorId));
+            iv_imag3.setColorFilter(getResources().getColor(currentColorId));
             tv_title1.setTextColor(getResources().getColor(currentColorId));
             tv_title2.setTextColor(getResources().getColor(currentColorId));
+            tv_title3.setTextColor(getResources().getColor(currentColorId));
             tv_version.setTextColor(getResources().getColor(currentColorId));
+            tv_app_name.setTextColor(getResources().getColor(currentColorId));
         }
     }
 

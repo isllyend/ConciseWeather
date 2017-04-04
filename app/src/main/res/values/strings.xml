@@ -7,4 +7,8 @@
     <string name="string_serach">搜索结果</string>
     <string name="string_serch_city">搜索城市...</string>
     <string name="isllyend_gmail">isllyend@gmail.com</string>
+    <string name="qq">75269701</string>
+    <string name="str_github">isllyend</string>
+    <string name="str_custom_wel">自定义欢迎页壁纸</string>
+    <string name="str_costom_main">自定义主页壁纸</string>
 </resources>

@@ -12,7 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>-->
-
+    <ImageView
+        android:visibility="gone"
+        android:scaleType="fitXY"
+        android:id="@+id/bg_weather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -72,21 +77,14 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ToolbarPopupTheme"
                     >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
-
                         <TextView
+
                             android:id="@+id/title_city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:textColor="#fff"
                             android:textSize="25sp"/>
-                    </LinearLayout>
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
@@ -120,10 +118,29 @@
                     <include layout="@layout/suggestion"/>
 
                     <include layout="@layout/sunrise"/>
+
+                    <!--<LinearLayout
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"></LinearLayout>-->
+
                 </LinearLayout>
 
+
             </android.support.v4.widget.NestedScrollView>
+
         </com.yalantis.phoenix.PullToRefreshView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_share"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:fabSize="mini"
+            android:layout_gravity="right|bottom"
+            android:src="@mipmap/share"
+            android:tint="#FFF"
+            android:layout_margin="16dp"
+            />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
@@ -134,6 +151,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
         />
+
 </android.support.v4.widget.DrawerLayout>
 
 

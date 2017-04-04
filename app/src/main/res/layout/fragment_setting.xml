@@ -42,29 +42,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
-            <RelativeLayout
-                android:layout_marginLeft="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="18sp"
-                    android:textColor="#666"
-                    android:text="启用通知栏"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <com.suke.widget.SwitchButton
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    app:sb_enable_effect="true"
-                    app:sb_show_indicator="false"
-                    app:sb_checked_color="@color/colorPrimary"
-                    app:sb_button_color="@color/colorPrimary"
-                    android:id="@+id/switch_button1"
-                    android:layout_width="45dp"
-                    android:layout_height="26dp"/>
-            </RelativeLayout>
+           
             <RelativeLayout
             android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp"
@@ -83,36 +61,13 @@
                 android:layout_alignParentRight="true"
                 app:sb_enable_effect="true"
                 app:sb_show_indicator="false"
-                app:sb_checked_color="@color/colorPrimary"
-                app:sb_button_color="@color/colorPrimary"
+                app:sb_checked_color="#66666666"
+                app:sb_button_color="#666"
                 android:id="@+id/switch_button2"
                 android:layout_width="45dp"
                 android:layout_height="26dp"/>
         </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="18sp"
-                    android:textColor="#666"
-                    android:text="早晨天气提醒"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <com.suke.widget.SwitchButton
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    app:sb_enable_effect="true"
-                    app:sb_show_indicator="false"
-                    app:sb_checked_color="@color/colorPrimary"
-                    app:sb_button_color="@color/colorPrimary"
-                    android:id="@+id/switch_button3"
-                    android:layout_width="45dp"
-                    android:layout_height="26dp"/>
-            </RelativeLayout>
+
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
@@ -158,33 +113,9 @@
                     android:layout_alignParentRight="true"
                     app:sb_enable_effect="true"
                     app:sb_show_indicator="false"
-                    app:sb_checked_color="@color/colorPrimary"
-                    app:sb_button_color="@color/colorPrimary"
-                    android:id="@+id/switch_button4"
-                    android:layout_width="45dp"
-                    android:layout_height="26dp"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="18sp"
-                    android:textColor="#666"
-                    android:text="定位校准"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <com.suke.widget.SwitchButton
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    app:sb_enable_effect="true"
-                    app:sb_show_indicator="false"
-                    app:sb_checked_color="@color/colorPrimary"
-                    app:sb_button_color="@color/colorPrimary"
-                    android:id="@+id/switch_button5"
+                    app:sb_checked_color="#66666666"
+                    app:sb_button_color="#666"
+                    android:id="@+id/switch_button3"
                     android:layout_width="45dp"
                     android:layout_height="26dp"/>
             </RelativeLayout>
@@ -206,9 +137,9 @@
                     android:layout_alignParentRight="true"
                     app:sb_enable_effect="true"
                     app:sb_show_indicator="false"
-                    app:sb_checked_color="@color/colorPrimary"
-                    app:sb_button_color="@color/colorPrimary"
-                    android:id="@+id/switch_button6"
+                    app:sb_checked_color="#66666666"
+                    app:sb_button_color="#666"
+                    android:id="@+id/switch_button4"
                     android:layout_width="45dp"
                     android:layout_height="26dp"/>
             </RelativeLayout>
@@ -249,7 +180,7 @@
                     android:layout_centerVertical="true"
                     android:textSize="18sp"
                     android:textColor="#666"
-                    android:text="自定义主页壁纸"
+                    android:text="@string/str_costom_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -271,7 +202,7 @@
                     android:layout_centerVertical="true"
                     android:textSize="18sp"
                     android:textColor="#666"
-                    android:text="自定义欢迎页背景"
+                    android:text="@string/str_custom_wel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageView
